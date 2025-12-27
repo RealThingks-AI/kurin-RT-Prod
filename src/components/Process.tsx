@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Megaphone,
   Search,
@@ -30,6 +30,29 @@ const steps = [
 const Process = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeStep, setActiveStep] = useState(-1);
+  const [animationComplete, setAnimationComplete] = useState(false);
+
+  useEffect(() => {
+    if (isInView && !animationComplete) {
+      // Start animation after a small delay
+      const startDelay = setTimeout(() => {
+        let currentStep = 0;
+        const interval = setInterval(() => {
+          setActiveStep(currentStep);
+          currentStep++;
+          if (currentStep >= steps.length) {
+            clearInterval(interval);
+            setAnimationComplete(true);
+          }
+        }, 500); // 500ms per step = 5 seconds for 10 steps
+
+        return () => clearInterval(interval);
+      }, 500);
+
+      return () => clearTimeout(startDelay);
+    }
+  }, [isInView, animationComplete]);
 
   return (
     <section id="process" className="section-padding bg-primary" ref={ref}>
@@ -55,48 +78,166 @@ const Process = () => {
           </p>
         </motion.div>
 
-        {/* Desktop Stepper */}
+        {/* Desktop Stepper - Two Rows */}
         <div className="hidden lg:block">
-          <div className="relative">
-            {/* Progress Line */}
-            <div className="absolute top-20 left-0 right-0 h-1 bg-primary-foreground/10">
+          {/* First Row (Steps 1-5) */}
+          <div className="relative mb-8">
+            {/* Progress Line Row 1 */}
+            <div className="absolute top-5 left-[10%] right-[10%] h-1 bg-primary-foreground/10 rounded-full overflow-hidden">
               <motion.div
-                initial={{ scaleX: 0 }}
-                animate={isInView ? { scaleX: 1 } : {}}
-                transition={{ duration: 1.5, delay: 0.5 }}
                 className="h-full bg-accent origin-left"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: activeStep >= 4 ? 1 : activeStep >= 0 ? (activeStep + 1) / 5 : 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               />
             </div>
 
-            {/* Steps */}
-            <div className="grid grid-cols-5 gap-4">
-              {steps.map((step, index) => (
+            <div className="grid grid-cols-5 gap-6">
+              {steps.slice(0, 5).map((step, index) => (
                 <motion.div
                   key={step.title}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.3 + index * 0.15 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative flex flex-col items-center text-center"
                 >
                   {/* Step Number */}
-                  <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-lg mb-4 shadow-glow">
+                  <motion.div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mb-4 z-10 transition-all duration-300 ${
+                      activeStep >= index
+                        ? "bg-accent text-accent-foreground shadow-glow scale-110"
+                        : "bg-primary-foreground/20 text-primary-foreground/60"
+                    }`}
+                    animate={activeStep === index ? { scale: [1, 1.2, 1.1] } : {}}
+                    transition={{ duration: 0.3 }}
+                  >
                     {index + 1}
-                  </div>
+                  </motion.div>
 
                   {/* Icon Circle */}
-                  <div className="w-24 h-24 rounded-full bg-primary-foreground/10 flex items-center justify-center mb-4 border-2 border-primary-foreground/20">
-                    <step.icon className="w-10 h-10 text-accent" />
-                  </div>
+                  <motion.div
+                    className={`w-20 h-20 rounded-full flex items-center justify-center mb-4 border-2 transition-all duration-300 ${
+                      activeStep >= index
+                        ? "bg-accent/20 border-accent"
+                        : "bg-primary-foreground/10 border-primary-foreground/20"
+                    }`}
+                    animate={activeStep === index ? { scale: [1, 1.1, 1.05] } : {}}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <step.icon
+                      className={`w-8 h-8 transition-colors duration-300 ${
+                        activeStep >= index ? "text-accent" : "text-primary-foreground/40"
+                      }`}
+                    />
+                  </motion.div>
 
                   {/* Text */}
-                  <h3 className="font-display font-bold text-primary-foreground mb-2">
+                  <h3
+                    className={`font-display font-bold text-sm mb-1 transition-colors duration-300 ${
+                      activeStep >= index ? "text-primary-foreground" : "text-primary-foreground/50"
+                    }`}
+                  >
                     {step.title}
                   </h3>
-                  <p className="text-sm text-primary-foreground/60">
+                  <p
+                    className={`text-xs transition-colors duration-300 ${
+                      activeStep >= index ? "text-primary-foreground/70" : "text-primary-foreground/40"
+                    }`}
+                  >
                     {step.description}
                   </p>
                 </motion.div>
               ))}
+            </div>
+          </div>
+
+          {/* Connector Arrow */}
+          <div className="flex justify-center mb-8">
+            <motion.div
+              className="flex items-center gap-2 text-accent"
+              initial={{ opacity: 0 }}
+              animate={activeStep >= 4 ? { opacity: 1 } : { opacity: 0.3 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="w-8 h-0.5 bg-accent/50" />
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+              <div className="w-8 h-0.5 bg-accent/50" />
+            </motion.div>
+          </div>
+
+          {/* Second Row (Steps 6-10) */}
+          <div className="relative">
+            {/* Progress Line Row 2 */}
+            <div className="absolute top-5 left-[10%] right-[10%] h-1 bg-primary-foreground/10 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-accent origin-left"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: activeStep >= 9 ? 1 : activeStep >= 5 ? (activeStep - 4) / 5 : 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              />
+            </div>
+
+            <div className="grid grid-cols-5 gap-6">
+              {steps.slice(5, 10).map((step, index) => {
+                const actualIndex = index + 5;
+                return (
+                  <motion.div
+                    key={step.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                    className="relative flex flex-col items-center text-center"
+                  >
+                    {/* Step Number */}
+                    <motion.div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mb-4 z-10 transition-all duration-300 ${
+                        activeStep >= actualIndex
+                          ? "bg-accent text-accent-foreground shadow-glow scale-110"
+                          : "bg-primary-foreground/20 text-primary-foreground/60"
+                      }`}
+                      animate={activeStep === actualIndex ? { scale: [1, 1.2, 1.1] } : {}}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {actualIndex + 1}
+                    </motion.div>
+
+                    {/* Icon Circle */}
+                    <motion.div
+                      className={`w-20 h-20 rounded-full flex items-center justify-center mb-4 border-2 transition-all duration-300 ${
+                        activeStep >= actualIndex
+                          ? "bg-accent/20 border-accent"
+                          : "bg-primary-foreground/10 border-primary-foreground/20"
+                      }`}
+                      animate={activeStep === actualIndex ? { scale: [1, 1.1, 1.05] } : {}}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <step.icon
+                        className={`w-8 h-8 transition-colors duration-300 ${
+                          activeStep >= actualIndex ? "text-accent" : "text-primary-foreground/40"
+                        }`}
+                      />
+                    </motion.div>
+
+                    {/* Text */}
+                    <h3
+                      className={`font-display font-bold text-sm mb-1 transition-colors duration-300 ${
+                        activeStep >= actualIndex ? "text-primary-foreground" : "text-primary-foreground/50"
+                      }`}
+                    >
+                      {step.title}
+                    </h3>
+                    <p
+                      className={`text-xs transition-colors duration-300 ${
+                        activeStep >= actualIndex ? "text-primary-foreground/70" : "text-primary-foreground/40"
+                      }`}
+                    >
+                      {step.description}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -105,41 +246,69 @@ const Process = () => {
         <div className="lg:hidden">
           <div className="relative">
             {/* Vertical Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary-foreground/10">
+            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary-foreground/10 overflow-hidden">
               <motion.div
-                initial={{ scaleY: 0 }}
-                animate={isInView ? { scaleY: 1 } : {}}
-                transition={{ duration: 1.5, delay: 0.3 }}
-                className="h-full bg-accent origin-top"
+                className="w-full bg-accent origin-top"
+                initial={{ height: 0 }}
+                animate={{ height: activeStep >= 0 ? `${((activeStep + 1) / steps.length) * 100}%` : 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               />
             </div>
 
             {/* Steps */}
-            <div className="space-y-8">
+            <div className="space-y-6">
               {steps.map((step, index) => (
                 <motion.div
                   key={step.title}
                   initial={{ opacity: 0, x: 30 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                  className="relative flex gap-6 items-start"
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                  className="relative flex gap-5 items-start"
                 >
                   {/* Step Icon */}
                   <div className="relative z-10 flex-shrink-0">
-                    <div className="w-16 h-16 rounded-full bg-primary-foreground/10 flex items-center justify-center border-2 border-accent">
-                      <step.icon className="w-7 h-7 text-accent" />
-                    </div>
-                    <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold">
+                    <motion.div
+                      className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
+                        activeStep >= index
+                          ? "bg-accent/20 border-accent"
+                          : "bg-primary-foreground/10 border-primary-foreground/20"
+                      }`}
+                      animate={activeStep === index ? { scale: [1, 1.1, 1.05] } : {}}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <step.icon
+                        className={`w-7 h-7 transition-colors duration-300 ${
+                          activeStep >= index ? "text-accent" : "text-primary-foreground/40"
+                        }`}
+                      />
+                    </motion.div>
+                    <motion.div
+                      className={`absolute -top-2 -right-2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                        activeStep >= index
+                          ? "bg-accent text-accent-foreground shadow-glow"
+                          : "bg-primary-foreground/20 text-primary-foreground/60"
+                      }`}
+                      animate={activeStep === index ? { scale: [1, 1.3, 1.1] } : {}}
+                      transition={{ duration: 0.3 }}
+                    >
                       {index + 1}
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* Content */}
-                  <div className="pt-3">
-                    <h3 className="font-display font-bold text-primary-foreground text-lg mb-1">
+                  <div className="pt-2">
+                    <h3
+                      className={`font-display font-bold text-lg mb-1 transition-colors duration-300 ${
+                        activeStep >= index ? "text-primary-foreground" : "text-primary-foreground/50"
+                      }`}
+                    >
                       {step.title}
                     </h3>
-                    <p className="text-primary-foreground/60">
+                    <p
+                      className={`text-sm transition-colors duration-300 ${
+                        activeStep >= index ? "text-primary-foreground/70" : "text-primary-foreground/40"
+                      }`}
+                    >
                       {step.description}
                     </p>
                   </div>
