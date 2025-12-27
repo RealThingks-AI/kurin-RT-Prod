@@ -1,13 +1,42 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Helmet } from "react-helmet-async";
+import Navigation from "@/components/Navigation";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Services from "@/components/Services";
+import Process from "@/components/Process";
+import Industries from "@/components/Industries";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
+import FloatingButtons from "@/components/FloatingButtons";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Helmet>
+        <title>Kurin Hygienic – Premium Manpower & Facility Management Solutions</title>
+        <meta
+          name="description"
+          content="Kurin Hygienic provides 24x7 quality manpower and facility management services. Staff outsourcing, housekeeping, security, and MEP services in Pune."
+        />
+        <meta
+          name="keywords"
+          content="manpower solutions, facility management, housekeeping, security services, Pune, staff outsourcing"
+        />
+        <link rel="canonical" href="https://kurinhygienic.com" />
+      </Helmet>
+
+      <main className="relative">
+        <Navigation />
+        <Hero />
+        <About />
+        <Services />
+        <Process />
+        <Industries />
+        <Contact />
+        <Footer />
+        <FloatingButtons />
+      </main>
+    </>
   );
 };
 
