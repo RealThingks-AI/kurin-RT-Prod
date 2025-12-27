@@ -31,14 +31,14 @@ const FloatingButtons = () => {
             href="https://wa.me/917038613623"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+            className="relative z-10 flex items-center justify-center w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
             onMouseEnter={() => setShowTooltip("whatsapp")}
             onMouseLeave={() => setShowTooltip(null)}
           >
             <MessageCircle className="w-7 h-7 text-primary-foreground" />
           </a>
           {/* Pulse Animation */}
-          <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-25" />
+          <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-25 pointer-events-none" />
         </div>
       </motion.div>
 
@@ -64,14 +64,14 @@ const FloatingButtons = () => {
           </AnimatePresence>
           <a
             href="tel:7038613623"
-            className="flex items-center justify-center w-16 h-16 bg-accent hover:bg-accent/90 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+            className="relative z-10 flex items-center justify-center w-16 h-16 bg-accent hover:bg-accent/90 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
             onMouseEnter={() => setShowTooltip("call")}
             onMouseLeave={() => setShowTooltip(null)}
           >
             <Phone className="w-7 h-7 text-accent-foreground" />
           </a>
           {/* Pulse Animation */}
-          <span className="absolute inset-0 rounded-full bg-accent animate-ping opacity-25" />
+          <span className="absolute inset-0 rounded-full bg-accent animate-ping opacity-25 pointer-events-none" />
         </div>
       </motion.div>
     </>
