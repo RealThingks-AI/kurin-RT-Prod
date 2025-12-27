@@ -45,7 +45,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-gradient-to-b from-slate-900 to-slate-950 pt-16 pb-8" ref={ref}>
+    <footer className="relative bg-[#0f172a] pt-16 pb-8" ref={ref}>
       {/* Decorative Top Border */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-purple-dark to-accent" />
 
@@ -69,7 +69,7 @@ const Footer = () => {
               alt="Kurin Hygienic" 
               className="h-12 md:h-14 w-auto mb-4"
             />
-            <p className="text-primary-foreground/60 text-sm mb-5 leading-relaxed max-w-xs">
+            <p className="text-white/60 text-sm mb-5 leading-relaxed max-w-xs">
               Providing comprehensive manpower and facility management solutions since 2018.
             </p>
             
@@ -86,9 +86,9 @@ const Footer = () => {
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
                   whileHover={{ y: -3, scale: 1.1 }}
-                  className="p-2.5 rounded-xl bg-primary-foreground/10 hover:bg-accent hover:shadow-glow transition-all duration-300 group"
+                  className="p-2.5 rounded-xl bg-white/10 hover:bg-accent hover:shadow-glow transition-all duration-300 group"
                 >
-                  <social.icon className="w-4 h-4 text-primary-foreground/70 group-hover:text-accent-foreground transition-colors" />
+                  <social.icon className="w-4 h-4 text-white/70 group-hover:text-accent-foreground transition-colors" />
                 </motion.a>
               ))}
             </div>
@@ -100,15 +100,15 @@ const Footer = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="text-primary-foreground font-display font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-white font-display font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-primary-foreground/60 hover:text-accent text-sm transition-colors flex items-center gap-2 group"
+                    className="text-white/60 hover:text-accent text-sm transition-colors flex items-center gap-2 group"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground/30 group-hover:bg-accent transition-colors" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/30 group-hover:bg-accent transition-colors" />
                     {link.label}
                   </a>
                 </li>
@@ -122,11 +122,11 @@ const Footer = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h4 className="text-primary-foreground font-display font-semibold mb-4">Contact Us</h4>
+            <h4 className="text-white font-display font-semibold mb-4">Contact Us</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                <span className="text-primary-foreground/60 text-sm leading-relaxed flex-1 min-w-0">
+                <span className="text-white/60 text-sm leading-relaxed flex-1 min-w-0">
                   Office No. 06, Swami Plaza, Shahunagar, Chinchwad, Pune – 411019
                 </span>
               </li>
@@ -134,7 +134,7 @@ const Footer = () => {
                 <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                 <a
                   href="tel:7038613623"
-                  className="text-primary-foreground/60 hover:text-accent text-sm transition-colors flex-1 min-w-0"
+                  className="text-white/60 hover:text-accent text-sm transition-colors flex-1 min-w-0"
                 >
                   +91 7038 613 623
                 </a>
@@ -143,7 +143,7 @@ const Footer = () => {
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <a
                   href="mailto:kurin.pune@gmail.com"
-                  className="text-primary-foreground/60 hover:text-accent text-sm transition-colors flex-1 min-w-0 break-all"
+                  className="text-white/60 hover:text-accent text-sm transition-colors flex-1 min-w-0 break-all"
                 >
                   kurin.pune@gmail.com
                 </a>
@@ -158,8 +158,8 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="sm:col-span-2 lg:col-span-1"
           >
-            <h4 className="text-primary-foreground font-display font-semibold mb-4">Get a Quote</h4>
-            <p className="text-primary-foreground/60 text-sm mb-4 max-w-xs">
+            <h4 className="text-white font-display font-semibold mb-4">Get a Quote</h4>
+            <p className="text-white/60 text-sm mb-4 max-w-xs">
               Need manpower solutions? Contact us for a free consultation.
             </p>
             <a
@@ -172,7 +172,7 @@ const Footer = () => {
         </motion.div>
 
         {/* Divider */}
-        <div className="border-t border-primary-foreground/10 pt-8" />
+        <div className="border-t border-white/10 pt-8" />
 
         {/* Bottom Row */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -183,7 +183,7 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-center md:text-left"
           >
-            <p className="text-primary-foreground/50 text-sm">
+            <p className="text-white/50 text-sm">
               © {currentYear} Kurin Hygienic. All rights reserved.
             </p>
           </motion.div>
@@ -197,13 +197,13 @@ const Footer = () => {
           >
             <Link
               to="/privacy-policy"
-              className="text-primary-foreground/50 hover:text-accent transition-colors"
+              className="text-white/50 hover:text-accent transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               to="/terms-of-service"
-              className="text-primary-foreground/50 hover:text-accent transition-colors"
+              className="text-white/50 hover:text-accent transition-colors"
             >
               Terms & Conditions
             </Link>
