@@ -224,8 +224,8 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Main Heading - Static for fast LCP */}
-          <div className="h-[5.5rem] md:h-[7rem] lg:h-[8rem] mt-6 mb-8 md:mt-8 md:mb-10 overflow-hidden animate-fade-in">
+          {/* Main Heading - Static for fast LCP - no animation to ensure immediate paint */}
+          <div className="h-[5.5rem] md:h-[7rem] lg:h-[8rem] mt-6 mb-8 md:mt-8 md:mb-10 overflow-hidden">
             <h1 className="heading-xl text-white drop-shadow-lg">
               {taglines[currentTagline]}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light via-purple-300 to-blue-200">
