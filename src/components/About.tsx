@@ -140,7 +140,7 @@ const About = () => {
                 <h4 className="font-display font-semibold text-primary mb-1">
                   {value.label}
                 </h4>
-                <p className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                <p className="text-xs text-muted-foreground">
                   {value.description}
                 </p>
               </motion.div>
