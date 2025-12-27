@@ -55,26 +55,26 @@ const Footer = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mb-12"
         >
           {/* Brand Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-1"
+            className="sm:col-span-2 lg:col-span-1"
           >
             <img 
               src={logo} 
               alt="Kurin Hygienic" 
-              className="h-10 md:h-14 w-auto mb-3 md:mb-4"
+              className="h-12 md:h-14 w-auto mb-4"
             />
-            <p className="text-primary-foreground/60 text-xs md:text-sm mb-4 md:mb-6 leading-relaxed">
+            <p className="text-primary-foreground/60 text-sm mb-5 leading-relaxed max-w-xs">
               Providing comprehensive manpower and facility management solutions since 2018.
             </p>
             
             {/* Social Links */}
-            <div className="flex gap-1.5 md:gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap">
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={social.name}
@@ -86,9 +86,9 @@ const Footer = () => {
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
                   whileHover={{ y: -3, scale: 1.1 }}
-                  className="p-2 md:p-2.5 rounded-lg md:rounded-xl bg-primary-foreground/10 hover:bg-accent hover:shadow-glow transition-all duration-300 group"
+                  className="p-2.5 rounded-xl bg-primary-foreground/10 hover:bg-accent hover:shadow-glow transition-all duration-300 group"
                 >
-                  <social.icon className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary-foreground/70 group-hover:text-accent-foreground transition-colors" />
+                  <social.icon className="w-4 h-4 text-primary-foreground/70 group-hover:text-accent-foreground transition-colors" />
                 </motion.a>
               ))}
             </div>
@@ -125,27 +125,25 @@ const Footer = () => {
             <h4 className="text-primary-foreground font-display font-semibold mb-4">Contact Us</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                <span className="text-primary-foreground/60 text-sm leading-relaxed">
-                  Office No. 06, Swami Plaza,<br />
-                  Shahunagar, Chinchwad,<br />
-                  Pune – 411019
+                <MapPin className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                <span className="text-primary-foreground/60 text-sm leading-relaxed flex-1 min-w-0">
+                  Office No. 06, Swami Plaza, Shahunagar, Chinchwad, Pune – 411019
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-accent flex-shrink-0" />
+                <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                 <a
                   href="tel:7038613623"
-                  className="text-primary-foreground/60 hover:text-accent text-sm transition-colors"
+                  className="text-primary-foreground/60 hover:text-accent text-sm transition-colors flex-1 min-w-0"
                 >
                   +91 7038 613 623
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-accent flex-shrink-0" />
+                <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <a
                   href="mailto:kurin.pune@gmail.com"
-                  className="text-primary-foreground/60 hover:text-accent text-sm transition-colors"
+                  className="text-primary-foreground/60 hover:text-accent text-sm transition-colors flex-1 min-w-0 break-all"
                 >
                   kurin.pune@gmail.com
                 </a>
@@ -158,14 +156,15 @@ const Footer = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
+            className="sm:col-span-2 lg:col-span-1"
           >
             <h4 className="text-primary-foreground font-display font-semibold mb-4">Get a Quote</h4>
-            <p className="text-primary-foreground/60 text-sm mb-4">
+            <p className="text-primary-foreground/60 text-sm mb-4 max-w-xs">
               Need manpower solutions? Contact us for a free consultation.
             </p>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground rounded-xl font-medium text-sm hover:shadow-glow hover:-translate-y-0.5 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground rounded-xl font-medium text-sm hover:shadow-glow hover:-translate-y-0.5 transition-all duration-300"
             >
               Get Started
             </a>
