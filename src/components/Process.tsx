@@ -339,12 +339,12 @@ const Process = () => {
                   initial={{ opacity: 0, x: 30 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
-                  className="relative flex gap-5 items-start"
+                  className="relative flex gap-4 items-start pl-2"
                 >
                   {/* Step Icon */}
                   <div className="relative z-10 flex-shrink-0">
                     <motion.div
-                      className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
+                      className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
                         activeStep >= index
                           ? "bg-accent/20 border-accent"
                           : "bg-primary-foreground/10 border-primary-foreground/20"
@@ -353,13 +353,13 @@ const Process = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <step.icon
-                        className={`w-7 h-7 transition-colors duration-300 ${
+                        className={`w-6 h-6 sm:w-7 sm:h-7 transition-colors duration-300 ${
                           activeStep >= index ? "text-accent" : "text-primary-foreground/40"
                         }`}
                       />
                     </motion.div>
                     <motion.div
-                      className={`absolute -top-2 -right-2 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                      className={`absolute -top-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                         activeStep >= index
                           ? "bg-accent text-accent-foreground shadow-glow"
                           : "bg-primary-foreground/20 text-primary-foreground/60"
@@ -372,9 +372,9 @@ const Process = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="pt-2">
+                  <div className="flex-1 min-w-0 pt-1 pr-2">
                     <h3
-                      className={`font-display font-bold text-lg mb-1 transition-colors duration-300 ${
+                      className={`font-display font-bold text-base sm:text-lg mb-1 transition-colors duration-300 ${
                         activeStep >= index ? "text-primary-foreground" : "text-primary-foreground/50"
                       }`}
                     >
