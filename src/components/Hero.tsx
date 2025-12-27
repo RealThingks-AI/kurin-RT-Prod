@@ -164,12 +164,12 @@ const Hero = () => {
                 {clients.map((client) => (
                   <div
                     key={client.name}
-                    className="flex-shrink-0 px-6 py-3 mx-3 bg-white rounded-lg shadow-sm flex items-center justify-center min-w-[140px]"
+                    className="flex-shrink-0 px-8 py-4 mx-4 bg-white rounded-xl shadow-sm flex items-center justify-center min-w-[180px]"
                   >
                     <img
                       src={client.logo}
                       alt={client.name}
-                      className="h-10 w-auto max-w-[120px] object-contain"
+                      className="h-20 w-auto max-w-[160px] object-contain"
                     />
                   </div>
                 ))}
@@ -179,12 +179,12 @@ const Hero = () => {
                 {clients.map((client) => (
                   <div
                     key={`${client.name}-dup`}
-                    className="flex-shrink-0 px-6 py-3 mx-3 bg-white rounded-lg shadow-sm flex items-center justify-center min-w-[140px]"
+                    className="flex-shrink-0 px-8 py-4 mx-4 bg-white rounded-xl shadow-sm flex items-center justify-center min-w-[180px]"
                   >
                     <img
                       src={client.logo}
                       alt={client.name}
-                      className="h-10 w-auto max-w-[120px] object-contain"
+                      className="h-20 w-auto max-w-[160px] object-contain"
                     />
                   </div>
                 ))}
