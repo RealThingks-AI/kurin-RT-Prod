@@ -35,7 +35,6 @@ const Process = () => {
 
   useEffect(() => {
     if (isInView && !animationComplete) {
-      // Start animation after a small delay
       const startDelay = setTimeout(() => {
         let currentStep = 0;
         const interval = setInterval(() => {
@@ -45,37 +44,83 @@ const Process = () => {
             clearInterval(interval);
             setAnimationComplete(true);
           }
-        }, 500); // 500ms per step = 5 seconds for 10 steps
+        }, 400);
 
         return () => clearInterval(interval);
-      }, 500);
+      }, 600);
 
       return () => clearTimeout(startDelay);
     }
   }, [isInView, animationComplete]);
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut" as const,
+      },
+    },
+  };
+
+  const stepVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.9 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        delay: i * 0.1,
+        ease: "easeOut" as const,
+      },
+    }),
+  };
 
   return (
     <section id="process" className="section-padding bg-primary" ref={ref}>
       <div className="section-container">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          variants={headerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="inline-block px-4 py-2 mb-4 text-sm font-medium rounded-full bg-accent/20 text-accent border border-accent/30">
+          <motion.span 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="inline-block px-4 py-2 mb-4 text-sm font-medium rounded-full bg-accent/20 text-accent border border-accent/30"
+          >
             Quality Assurance
-          </span>
-          <h2 className="heading-lg text-primary-foreground mb-6">
+          </motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="heading-lg text-primary-foreground mb-6"
+          >
             Our <span className="text-accent">Recruiting & Selection Process</span>
-          </h2>
-          <p className="text-xl text-primary-foreground/70 mb-4">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-xl text-primary-foreground/70 mb-4"
+          >
             Our recruitment principle mainly involves finding the right candidate with the best skills, experience, and personality to fit the job.
-          </p>
-          <p className="text-primary-foreground/60">
+          </motion.p>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="text-primary-foreground/60"
+          >
             A rigorous 10-step process ensuring you get only the best qualified and verified professionals.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Desktop Stepper - Two Rows */}
@@ -96,20 +141,21 @@ const Process = () => {
               {steps.slice(0, 5).map((step, index) => (
                 <motion.div
                   key={step.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  custom={index}
+                  variants={stepVariants}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
                   className="relative flex flex-col items-center text-center"
                 >
                   {/* Step Number */}
                   <motion.div
                     className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mb-4 z-10 transition-all duration-300 ${
                       activeStep >= index
-                        ? "bg-accent text-accent-foreground shadow-glow scale-110"
+                        ? "bg-accent text-accent-foreground shadow-glow"
                         : "bg-primary-foreground/20 text-primary-foreground/60"
                     }`}
-                    animate={activeStep === index ? { scale: [1, 1.2, 1.1] } : {}}
-                    transition={{ duration: 0.3 }}
+                    animate={activeStep === index ? { scale: [1, 1.3, 1.15], rotate: [0, 5, -5, 0] } : { scale: activeStep >= index ? 1.1 : 1 }}
+                    transition={{ duration: 0.4 }}
                   >
                     {index + 1}
                   </motion.div>
@@ -121,24 +167,31 @@ const Process = () => {
                         ? "bg-accent/20 border-accent"
                         : "bg-primary-foreground/10 border-primary-foreground/20"
                     }`}
-                    animate={activeStep === index ? { scale: [1, 1.1, 1.05] } : {}}
-                    transition={{ duration: 0.3 }}
+                    animate={activeStep === index ? { scale: [1, 1.15, 1.08], boxShadow: "0 0 30px rgba(var(--accent), 0.4)" } : {}}
+                    transition={{ duration: 0.4 }}
                   >
-                    <step.icon
-                      className={`w-8 h-8 transition-colors duration-300 ${
-                        activeStep >= index ? "text-accent" : "text-primary-foreground/40"
-                      }`}
-                    />
+                    <motion.div
+                      animate={activeStep === index ? { rotate: [0, -10, 10, 0] } : {}}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <step.icon
+                        className={`w-8 h-8 transition-colors duration-300 ${
+                          activeStep >= index ? "text-accent" : "text-primary-foreground/40"
+                        }`}
+                      />
+                    </motion.div>
                   </motion.div>
 
                   {/* Text */}
-                  <h3
+                  <motion.h3
                     className={`font-display font-bold text-sm mb-1 transition-colors duration-300 ${
                       activeStep >= index ? "text-primary-foreground" : "text-primary-foreground/50"
                     }`}
+                    animate={activeStep === index ? { y: [0, -3, 0] } : {}}
+                    transition={{ duration: 0.3 }}
                   >
                     {step.title}
-                  </h3>
+                  </motion.h3>
                   <p
                     className={`text-xs transition-colors duration-300 ${
                       activeStep >= index ? "text-primary-foreground/70" : "text-primary-foreground/40"
@@ -155,15 +208,30 @@ const Process = () => {
           <div className="flex justify-center mb-8">
             <motion.div
               className="flex items-center gap-2 text-accent"
-              initial={{ opacity: 0 }}
-              animate={activeStep >= 4 ? { opacity: 1 } : { opacity: 0.3 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={activeStep >= 4 ? { opacity: 1, y: 0 } : { opacity: 0.3, y: -10 }}
+              transition={{ duration: 0.4 }}
             >
-              <div className="w-8 h-0.5 bg-accent/50" />
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <motion.div 
+                className="w-8 h-0.5 bg-accent/50"
+                animate={activeStep >= 4 ? { scaleX: [0, 1] } : {}}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.svg 
+                className="w-6 h-6" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+                animate={activeStep >= 4 ? { y: [0, 3, 0] } : {}}
+                transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 1 }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-              <div className="w-8 h-0.5 bg-accent/50" />
+              </motion.svg>
+              <motion.div 
+                className="w-8 h-0.5 bg-accent/50"
+                animate={activeStep >= 4 ? { scaleX: [0, 1] } : {}}
+                transition={{ duration: 0.3 }}
+              />
             </motion.div>
           </div>
 
@@ -185,20 +253,21 @@ const Process = () => {
                 return (
                   <motion.div
                     key={step.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                    custom={actualIndex}
+                    variants={stepVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
                     className="relative flex flex-col items-center text-center"
                   >
                     {/* Step Number */}
                     <motion.div
                       className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mb-4 z-10 transition-all duration-300 ${
                         activeStep >= actualIndex
-                          ? "bg-accent text-accent-foreground shadow-glow scale-110"
+                          ? "bg-accent text-accent-foreground shadow-glow"
                           : "bg-primary-foreground/20 text-primary-foreground/60"
                       }`}
-                      animate={activeStep === actualIndex ? { scale: [1, 1.2, 1.1] } : {}}
-                      transition={{ duration: 0.3 }}
+                      animate={activeStep === actualIndex ? { scale: [1, 1.3, 1.15], rotate: [0, 5, -5, 0] } : { scale: activeStep >= actualIndex ? 1.1 : 1 }}
+                      transition={{ duration: 0.4 }}
                     >
                       {actualIndex + 1}
                     </motion.div>
@@ -210,24 +279,31 @@ const Process = () => {
                           ? "bg-accent/20 border-accent"
                           : "bg-primary-foreground/10 border-primary-foreground/20"
                       }`}
-                      animate={activeStep === actualIndex ? { scale: [1, 1.1, 1.05] } : {}}
-                      transition={{ duration: 0.3 }}
+                      animate={activeStep === actualIndex ? { scale: [1, 1.15, 1.08] } : {}}
+                      transition={{ duration: 0.4 }}
                     >
-                      <step.icon
-                        className={`w-8 h-8 transition-colors duration-300 ${
-                          activeStep >= actualIndex ? "text-accent" : "text-primary-foreground/40"
-                        }`}
-                      />
+                      <motion.div
+                        animate={activeStep === actualIndex ? { rotate: [0, -10, 10, 0] } : {}}
+                        transition={{ duration: 0.4 }}
+                      >
+                        <step.icon
+                          className={`w-8 h-8 transition-colors duration-300 ${
+                            activeStep >= actualIndex ? "text-accent" : "text-primary-foreground/40"
+                          }`}
+                        />
+                      </motion.div>
                     </motion.div>
 
                     {/* Text */}
-                    <h3
+                    <motion.h3
                       className={`font-display font-bold text-sm mb-1 transition-colors duration-300 ${
                         activeStep >= actualIndex ? "text-primary-foreground" : "text-primary-foreground/50"
                       }`}
+                      animate={activeStep === actualIndex ? { y: [0, -3, 0] } : {}}
+                      transition={{ duration: 0.3 }}
                     >
                       {step.title}
-                    </h3>
+                    </motion.h3>
                     <p
                       className={`text-xs transition-colors duration-300 ${
                         activeStep >= actualIndex ? "text-primary-foreground/70" : "text-primary-foreground/40"
