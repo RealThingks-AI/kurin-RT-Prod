@@ -18,7 +18,7 @@ const services = [
     icon: Users,
     title: "Staff & Payroll Outsourcing",
     description:
-      "We manage time-consuming financial and HR functions with speed and accuracy, enabling clients to focus on core business operations.",
+      "Outsourcing is changing business worldwide. We take the most time-consuming financial functions off your hands and handle them faster, more accurately and at lower cost than you can in-house.",
     features: ["Recruitment & Onboarding", "Payroll Management", "Compliance Handling", "HR Administration"],
   },
   {
@@ -32,15 +32,37 @@ const services = [
     icon: Building2,
     title: "Corporate Housekeeping",
     description:
-      "Comprehensive cleaning for offices, malls, and multiplexes including dusting, vacuuming, cobweb removal, and upholstery care.",
-    features: ["Office Cleaning", "Mall Maintenance", "Multiplex Cleaning", "Deep Sanitization"],
+      "We provide housekeeping services for corporate office, office campus, hospitals, multiplexes, shopping malls. Our trained personnel consistently work towards exceeding client needs.",
+    features: [
+      "Dusting of windowsills & ledges",
+      "Removing cobwebs",
+      "Vacuuming furniture",
+      "Cleaning telephones & intercoms",
+    ],
   },
   {
     icon: Sparkles,
     title: "Washroom Hygiene Management",
     description:
-      "Deep cleaning and sanitization of sinks, vanities, showers, and toilets at frequent intervals to maintain the highest hygiene standards.",
-    features: ["Periodic Sanitization", "Odour Control", "Consumable Refills", "Hygiene Audits"],
+      "Complete washroom care including cleaning, sanitizing and deodorizing. We clean vanities, sinks, mirrors, showers, bathtubs, floors and tile walls at required intervals.",
+    features: [
+      "Sanitize & Deodorize",
+      "Vanities & Sinks Cleaning",
+      "Mirror Cleaning",
+      "Floor & Tile Walls Washing",
+    ],
+  },
+  {
+    icon: Building2,
+    title: "Floor Care Services",
+    description:
+      "Shopping malls, multiplexes and big retail outlets - we handle crubbing, polishing and cleaning schedule with professional manner. Trained staff and personal supervision on day to day basis.",
+    features: [
+      "Wet & Dry Mopping",
+      "High Pressure Jet Machine",
+      "Carpet Vacuuming",
+      "Road Sweeping & Garbage Clearing",
+    ],
   },
   {
     icon: Wrench,

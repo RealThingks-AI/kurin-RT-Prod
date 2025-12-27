@@ -27,6 +27,7 @@ const services = [
   "Labour Supply",
   "Corporate Housekeeping",
   "Washroom Hygiene Management",
+  "Floor Care Services",
   "MEP & Technical Services",
   "Professional Security Services",
   "Pantry & Cafeteria Services",
