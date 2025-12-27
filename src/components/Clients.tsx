@@ -45,6 +45,9 @@ const Clients = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  // Duplicate clients for seamless infinite scroll
+  const duplicatedClients = [...clients, ...clients];
+
   return (
     <section id="clients" className="section-padding bg-background" ref={ref}>
       <div className="section-container">
@@ -53,7 +56,7 @@ const Clients = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10"
         >
           <span className="inline-block px-4 py-2 mb-4 text-sm font-medium rounded-full bg-accent/10 text-accent">
             Our Prestigious Clients
@@ -67,32 +70,48 @@ const Clients = () => {
           </p>
         </motion.div>
 
-        {/* Clients Grid */}
-        <motion.div 
+        {/* Auto-scrolling Carousel */}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6"
+          className="relative overflow-hidden"
         >
-          {clients.map((client, index) => (
-            <motion.div
-              key={client.name}
-              initial={{ opacity: 0, scale: 0.8, y: 30 }}
-              animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-              transition={{ 
-                duration: 0.5, 
-                delay: 0.3 + index * 0.04,
-                ease: "easeOut"
-              }}
-              className="bg-white rounded-xl border border-border p-4 md:p-6 flex items-center justify-center shadow-sm"
-            >
-              <img
-                src={client.logo}
-                alt={client.name}
-                className="h-12 md:h-16 w-auto max-w-full object-contain"
-              />
-            </motion.div>
-          ))}
+          {/* Gradient Overlays */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
+          {/* First Row - Left to Right */}
+          <div className="flex mb-6 animate-scroll-left hover:[animation-play-state:paused]">
+            {duplicatedClients.map((client, index) => (
+              <div
+                key={`row1-${client.name}-${index}`}
+                className="flex-shrink-0 mx-3 bg-white rounded-xl border border-border p-4 md:p-6 shadow-sm hover:shadow-md transition-shadow duration-300 group"
+              >
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className="h-12 md:h-16 w-auto min-w-[100px] max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Second Row - Right to Left */}
+          <div className="flex animate-scroll-right hover:[animation-play-state:paused]">
+            {duplicatedClients.reverse().map((client, index) => (
+              <div
+                key={`row2-${client.name}-${index}`}
+                className="flex-shrink-0 mx-3 bg-white rounded-xl border border-border p-4 md:p-6 shadow-sm hover:shadow-md transition-shadow duration-300 group"
+              >
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className="h-12 md:h-16 w-auto min-w-[100px] max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Trust Badge */}
@@ -100,7 +119,7 @@ const Clients = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-12 text-center"
+          className="mt-8 text-center"
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-accent/5 rounded-full border border-accent/10">
             <div className="flex -space-x-2">

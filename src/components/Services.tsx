@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Users,
   Building2,
@@ -11,6 +11,10 @@ import {
   Coffee,
   MessageCircle,
   CheckCircle2,
+  Clock,
+  Calendar,
+  FileText,
+  ArrowRight,
 } from "lucide-react";
 import {
   Dialog,
@@ -27,6 +31,7 @@ const services = [
     description:
       "Outsourcing is changing business worldwide. We take the most time-consuming financial functions off your hands and handle them faster, more accurately and at lower cost than you can in-house.",
     features: ["Recruitment & Onboarding", "Payroll Management", "Compliance Handling", "HR Administration"],
+    popular: true,
   },
   {
     icon: HardHat,
@@ -100,6 +105,7 @@ const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -113,7 +119,7 @@ const Services = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.95 },
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
@@ -130,25 +136,56 @@ const Services = () => {
     window.open(`https://wa.me/917038613623?text=${message}`, "_blank");
   };
 
+  const handleRequestQuote = (serviceName: string) => {
+    setSelectedService(null);
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent("prefillService", { detail: serviceName }));
+      }, 500);
+    }
+  };
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && selectedService) {
+        setSelectedService(null);
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [selectedService]);
+
   return (
     <>
-      <section id="services" className="py-16 md:py-20 bg-background" ref={ref}>
+      <section id="services" className="py-20 md:py-28 bg-gradient-subtle" ref={ref}>
         <div className="section-container">
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-2xl mx-auto mb-12"
+            className="text-center max-w-2xl mx-auto mb-16"
           >
-            <span className="inline-block px-3 py-1.5 mb-3 text-xs font-medium rounded-full bg-accent/10 text-accent">
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold rounded-full bg-accent/10 text-accent border border-accent/20"
+            >
+              <Sparkles className="w-4 h-4" />
               What We Do
-            </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
-              Comprehensive <span className="text-accent">Facility Solutions</span>
+            </motion.span>
+            <h2 className="heading-lg text-primary mb-5">
+              Comprehensive{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-dark">
+                Facility Solutions
+              </span>
             </h2>
-            <p className="text-muted-foreground text-sm">
-              From staffing to security, we provide end-to-end workforce and facility management services.
+            <p className="text-body">
+              From staffing to security, we provide end-to-end workforce and facility management services
+              tailored to your business needs.
             </p>
           </motion.div>
 
@@ -157,47 +194,90 @@ const Services = () => {
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5"
           >
-            {services.map((service) => (
+            {services.map((service, index) => (
               <motion.div
                 key={service.title}
                 variants={itemVariants}
                 onClick={() => setSelectedService(service)}
-                className="group relative bg-card rounded-xl border border-border p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelectedService(service);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`View details for ${service.title}`}
+                className="group relative bg-card rounded-xl md:rounded-2xl p-4 md:p-6 cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 overflow-hidden"
               >
-                {/* Icon */}
-                <div className="p-2.5 rounded-lg bg-accent/10 w-fit mb-4 group-hover:bg-accent group-hover:shadow-glow transition-all duration-300">
-                  <service.icon className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
-                </div>
+                {/* Gradient Border Effect */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/20 via-transparent to-purple-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-[1px] rounded-2xl bg-card" />
+                
+                {/* Glow Effect */}
+                <div 
+                  className={`absolute -inset-1 rounded-2xl bg-gradient-to-br from-accent/30 to-purple-dark/30 blur-xl transition-opacity duration-500 ${
+                    hoveredIndex === index ? "opacity-40" : "opacity-0"
+                  }`} 
+                />
 
                 {/* Content */}
-                <h3 className="font-semibold text-primary mb-2 text-base">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground mb-3 leading-relaxed text-xs line-clamp-2">
-                  {service.description}
-                </p>
-
-                {/* Features - Show only 2 */}
-                <div className="flex flex-wrap gap-1.5">
-                  {service.features.slice(0, 2).map((feature) => (
-                    <span
-                      key={feature}
-                      className="inline-block px-2 py-0.5 text-[10px] rounded-full bg-accent/10 text-accent"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                  {service.features.length > 2 && (
-                    <span className="inline-block px-2 py-0.5 text-[10px] rounded-full bg-muted text-muted-foreground">
-                      +{service.features.length - 2} more
-                    </span>
+                <div className="relative z-10">
+                  {/* Popular Badge */}
+                  {service.popular && (
+                    <div className="absolute -top-1 -right-1">
+                      <span className="inline-block px-1.5 md:px-2 py-0.5 text-[8px] md:text-[10px] font-bold rounded-full bg-accent text-accent-foreground shadow-lg">
+                        POPULAR
+                      </span>
+                    </div>
                   )}
+
+                  {/* Icon */}
+                  <div className="p-2 md:p-3 rounded-lg md:rounded-xl bg-gradient-to-br from-accent/10 to-purple-light/10 w-fit mb-3 md:mb-5 group-hover:from-accent group-hover:to-purple-dark group-hover:shadow-glow transition-all duration-500">
+                    <service.icon className="w-5 h-5 md:w-6 md:h-6 text-accent group-hover:text-white transition-colors duration-300" />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-display font-bold text-primary mb-2 md:mb-3 text-sm md:text-lg leading-tight group-hover:text-accent transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  
+                  {/* Description - Hidden on mobile */}
+                  <p className="hidden md:block text-muted-foreground mb-4 leading-relaxed text-sm line-clamp-2">
+                    {service.description}
+                  </p>
+
+                  {/* Features Preview - Hidden on mobile */}
+                  <div className="hidden md:flex flex-wrap gap-1.5 mb-4">
+                    {service.features.slice(0, 2).map((feature) => (
+                      <span
+                        key={feature}
+                        className="inline-block px-2.5 py-1 text-[11px] font-medium rounded-lg bg-accent/10 text-accent"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                    {service.features.length > 2 && (
+                      <span className="inline-block px-2.5 py-1 text-[11px] font-medium rounded-lg bg-muted text-muted-foreground">
+                        +{service.features.length - 2} more
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Learn More Link */}
+                  <div className="flex items-center gap-1 text-xs md:text-sm font-medium text-accent group-hover:gap-2 transition-all duration-300">
+                    <span className="hidden md:inline">Learn more</span>
+                    <span className="md:hidden">View</span>
+                    <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
+                  </div>
                 </div>
 
-                {/* Hover Border Effect */}
-                <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-accent/30 transition-colors pointer-events-none" />
+                {/* Bottom Border Animation */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-purple-dark scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-b-2xl" />
               </motion.div>
             ))}
           </motion.div>
@@ -206,46 +286,85 @@ const Services = () => {
 
       {/* Service Detail Dialog */}
       <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="sm:max-w-lg focus:outline-none border-accent/20">
           {selectedService && (
-            <>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
               <DialogHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-3 rounded-xl bg-accent/10">
-                    <selectedService.icon className="w-6 h-6 text-accent" />
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-accent/10 to-purple-light/10">
+                    <selectedService.icon className="w-7 h-7 text-accent" />
                   </div>
-                  <DialogTitle className="text-xl font-bold text-primary">
-                    {selectedService.title}
-                  </DialogTitle>
+                  <div>
+                    <DialogTitle className="text-xl font-display font-bold text-primary">
+                      {selectedService.title}
+                    </DialogTitle>
+                    {selectedService.popular && (
+                      <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-bold rounded-full bg-accent text-accent-foreground">
+                        MOST POPULAR
+                      </span>
+                    )}
+                  </div>
                 </div>
               </DialogHeader>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <p className="text-muted-foreground leading-relaxed">
                   {selectedService.description}
                 </p>
 
                 <div>
-                  <h4 className="font-semibold text-primary mb-3 text-sm">What's Included:</h4>
-                  <ul className="space-y-2">
+                  <h4 className="font-display font-semibold text-primary mb-4 text-sm flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-accent" />
+                    What's Included:
+                  </h4>
+                  <ul className="grid grid-cols-2 gap-2">
                     {selectedService.features.map((feature) => (
                       <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <Button
-                  onClick={() => handleWhatsApp(selectedService.title)}
-                  className="w-full bg-green-500 hover:bg-green-600 text-white"
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Enquire on WhatsApp
-                </Button>
+                {/* Service Badges */}
+                <div className="flex flex-wrap gap-3">
+                  <div className="flex items-center gap-2 px-4 py-2.5 bg-gradient-subtle rounded-xl border border-border">
+                    <Clock className="w-4 h-4 text-accent" />
+                    <span className="text-sm font-medium text-foreground">Response: Within 2 hours</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2.5 bg-gradient-subtle rounded-xl border border-border">
+                    <Calendar className="w-4 h-4 text-accent" />
+                    <span className="text-sm font-medium text-foreground">Available: 24/7</span>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Button
+                    onClick={() => handleWhatsApp(selectedService.title)}
+                    className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20"
+                    size="lg"
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Enquire on WhatsApp
+                  </Button>
+                  <Button
+                    onClick={() => handleRequestQuote(selectedService.title)}
+                    variant="accentOutline"
+                    className="flex-1"
+                    size="lg"
+                  >
+                    <FileText className="w-4 h-4 mr-2" />
+                    Request a Quote
+                  </Button>
+                </div>
               </div>
-            </>
+            </motion.div>
           )}
         </DialogContent>
       </Dialog>

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, Phone, X } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { useState } from "react";
 
 const FloatingButtons = () => {
@@ -31,6 +31,7 @@ const FloatingButtons = () => {
             href="https://wa.me/917038613623"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Chat with us on WhatsApp"
             className="relative z-10 flex items-center justify-center w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
             onMouseEnter={() => setShowTooltip("whatsapp")}
             onMouseLeave={() => setShowTooltip(null)}
@@ -64,6 +65,7 @@ const FloatingButtons = () => {
           </AnimatePresence>
           <a
             href="tel:7038613623"
+            aria-label="Call us now"
             className="relative z-10 flex items-center justify-center w-16 h-16 bg-accent hover:bg-accent/90 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
             onMouseEnter={() => setShowTooltip("call")}
             onMouseLeave={() => setShowTooltip(null)}

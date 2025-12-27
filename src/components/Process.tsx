@@ -80,14 +80,14 @@ const Process = () => {
   };
 
   return (
-    <section id="process" className="section-padding bg-primary" ref={ref}>
+    <section id="process" className="section-padding bg-slate-800" ref={ref}>
       <div className="section-container">
         {/* Header */}
         <motion.div
           variants={headerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10"
         >
           <motion.span 
             initial={{ opacity: 0, scale: 0.8 }}
