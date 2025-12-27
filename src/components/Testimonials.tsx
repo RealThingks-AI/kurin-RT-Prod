@@ -184,7 +184,7 @@ const Testimonials = () => {
           </div>
 
           {/* Dot Indicators */}
-          <div className="flex justify-center gap-1 mt-8" role="tablist">
+          <div className="flex justify-center gap-2 mt-8" role="tablist">
             {testimonials.map((_, index) => (
               <button
                 key={index}
@@ -192,16 +192,12 @@ const Testimonials = () => {
                 role="tab"
                 aria-selected={currentIndex === index}
                 aria-label={`Go to testimonial ${index + 1}`}
-                className="p-2 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-full"
-              >
-                <span
-                  className={`block rounded-full transition-all duration-300 ${
-                    currentIndex === index
-                      ? "bg-accent w-8 h-3"
-                      : "bg-accent/30 hover:bg-accent/50 w-3 h-3"
-                  }`}
-                />
-              </button>
+                className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${
+                  currentIndex === index
+                    ? "bg-accent w-8"
+                    : "bg-accent/30 hover:bg-accent/50"
+                }`}
+              />
             ))}
           </div>
         </div>

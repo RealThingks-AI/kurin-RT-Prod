@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Phone, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -91,14 +91,22 @@ const Hero = () => {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image - Static for faster LCP */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-hero-bg-fade"
+      {/* Background Image with Parallax Effect */}
+      <motion.div
+        initial={{ scale: 1.15, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
 
-      {/* Gradient Overlay - Static for faster LCP */}
-      <div className="absolute inset-0 gradient-overlay" />
+      {/* Gradient Overlay - Enhanced */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.2 }}
+        className="absolute inset-0 gradient-overlay" 
+      />
 
       {/* Animated Gradient Mesh */}
       <div className="absolute inset-0 opacity-30">
@@ -224,15 +232,29 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Main Heading - Static for fast LCP - no animation to ensure immediate paint */}
-          <div className="h-[5.5rem] md:h-[7rem] lg:h-[8rem] mt-6 mb-8 md:mt-8 md:mb-10 overflow-hidden">
-            <h1 className="heading-xl text-white drop-shadow-lg">
-              {taglines[currentTagline]}{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light via-purple-300 to-blue-200">
-                At Your Fingertips
-              </span>
-            </h1>
-          </div>
+          {/* Animated Tagline */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="h-[5.5rem] md:h-[7rem] lg:h-[8rem] mt-6 mb-8 md:mt-8 md:mb-10 overflow-hidden"
+          >
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={currentTagline}
+                initial={{ y: 60, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -60, opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="heading-xl text-white drop-shadow-lg"
+              >
+                {taglines[currentTagline]}{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light via-purple-300 to-blue-200">
+                  At Your Fingertips
+                </span>
+              </motion.h1>
+            </AnimatePresence>
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}

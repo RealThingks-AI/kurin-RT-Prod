@@ -4,7 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { SectionSkeleton } from "@/components/ui/section-skeleton";
 import LoadingScreen from "@/components/LoadingScreen";
 
 // Eager load critical pages
@@ -14,9 +16,6 @@ import Index from "./pages/Index";
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
-
-// Lazy load framer-motion components to reduce initial bundle
-const MotionDiv = lazy(() => import("framer-motion").then(mod => ({ default: mod.motion.div })));
 
 const queryClient = new QueryClient();
 
@@ -43,27 +42,13 @@ const PageLoader = () => (
   </div>
 );
 
-// Simple fallback wrapper for when motion is loading
-const SimpleFallback = ({ children }: { children: React.ReactNode }) => (
-  <div>{children}</div>
-);
-
-// Animated routes wrapper with lazy-loaded motion
+// Animated routes wrapper
 const AnimatedRoutes = () => {
   const location = useLocation();
   
   return (
-    <Suspense fallback={
-      <SimpleFallback>
-        <Routes location={location}>
-          <Route path="/" element={<Index />} />
-          <Route path="/privacy-policy" element={<Suspense fallback={<PageLoader />}><PrivacyPolicy /></Suspense>} />
-          <Route path="/terms-of-service" element={<Suspense fallback={<PageLoader />}><TermsOfService /></Suspense>} />
-          <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
-        </Routes>
-      </SimpleFallback>
-    }>
-      <MotionDiv
+    <AnimatePresence mode="wait">
+      <motion.div
         key={location.pathname}
         initial="initial"
         animate="in"
@@ -79,8 +64,8 @@ const AnimatedRoutes = () => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
-      </MotionDiv>
-    </Suspense>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
