@@ -69,29 +69,23 @@ const FAQ = () => {
         >
           <Accordion type="single" collapsible className="space-y-3">
             {faqs.map((faq, index) => (
-              <motion.div
+              <AccordionItem
                 key={index}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.08 }}
-                viewport={{ once: true }}
+                value={`item-${index}`}
+                className="bg-background rounded-lg border border-border shadow-sm overflow-hidden animate-fade-in"
+                style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'both' }}
               >
-                <AccordionItem
-                  value={`item-${index}`}
-                  className="bg-background rounded-lg border border-border shadow-sm overflow-hidden"
-                >
-                  <AccordionTrigger className="px-5 py-3 text-left hover:no-underline hover:bg-primary/5 transition-colors duration-300 [&[data-state=open]]:bg-primary/5">
-                    <span className="text-sm md:text-base font-medium text-foreground pr-4">
-                      {faq.question}
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-5 pb-3 pt-0">
-                    <p className="text-muted-foreground leading-relaxed text-sm">
-                      {faq.answer}
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              </motion.div>
+                <AccordionTrigger className="px-5 py-3 text-left hover:no-underline hover:bg-primary/5 transition-colors duration-300 [&[data-state=open]]:bg-primary/5">
+                  <span className="text-sm md:text-base font-medium text-foreground pr-4">
+                    {faq.question}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="px-5 pb-3 pt-0">
+                  <p className="text-muted-foreground leading-relaxed text-sm">
+                    {faq.answer}
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
             ))}
           </Accordion>
         </motion.div>
