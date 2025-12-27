@@ -75,12 +75,12 @@ const Clients = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="group bg-card rounded-xl border border-border p-4 md:p-6 flex items-center justify-center hover:shadow-card hover:border-accent/30 hover:-translate-y-1 transition-all duration-300"
+              className="bg-white rounded-xl border border-border p-4 md:p-6 flex items-center justify-center shadow-sm"
             >
               <img
                 src={client.logo}
                 alt={client.name}
-                className="h-12 md:h-16 w-auto max-w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="h-12 md:h-16 w-auto max-w-full object-contain"
               />
             </motion.div>
           ))}
