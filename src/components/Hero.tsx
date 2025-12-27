@@ -154,11 +154,11 @@ const Hero = () => {
         transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
         className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm py-6 border-t border-border/20"
       >
-        <div className="section-container">
+        <div className="w-full px-0">
           <p className="text-center text-muted-foreground text-sm mb-4 font-medium tracking-wider uppercase">
             Trusted by Industry Leaders
           </p>
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden w-full">
             <div className="flex w-max animate-marquee">
               <div className="flex whitespace-nowrap">
                 {clients.map((client) => (
