@@ -215,6 +215,7 @@
 
   .animate-marquee {
     animation: marquee 8s linear infinite;
+    will-change: transform;
   }
 
   .animation-delay-100 {
@@ -285,6 +286,6 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-25%);
+    transform: translateX(-50%);
   }
 }
