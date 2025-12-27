@@ -116,7 +116,12 @@ const Contact = () => {
 
             <div className="space-y-6">
               {/* Address */}
-              <div className="flex gap-4">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex gap-4"
+              >
                 <div className="p-3 rounded-xl bg-accent/10 h-fit">
                   <MapPin className="w-6 h-6 text-accent" />
                 </div>
@@ -130,10 +135,15 @@ const Contact = () => {
                     Shahunagar, Chinchwad, Pune – 411019
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Phone */}
-              <div className="flex gap-4">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="flex gap-4"
+              >
                 <div className="p-3 rounded-xl bg-accent/10 h-fit">
                   <Phone className="w-6 h-6 text-accent" />
                 </div>
@@ -156,10 +166,15 @@ const Contact = () => {
                     </a>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Email */}
-              <div className="flex gap-4">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="flex gap-4"
+              >
                 <div className="p-3 rounded-xl bg-accent/10 h-fit">
                   <Mail className="w-6 h-6 text-accent" />
                 </div>
@@ -174,11 +189,16 @@ const Contact = () => {
                     kurin.pune@gmail.com
                   </a>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Social Links */}
-            <div className="mt-10">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="mt-10"
+            >
               <h4 className="font-display font-semibold text-primary mb-4">
                 Follow Us
               </h4>
@@ -202,7 +222,7 @@ const Contact = () => {
                   <Twitter className="w-5 h-5 text-accent group-hover:text-accent-foreground" />
                 </a>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Contact Form */}
