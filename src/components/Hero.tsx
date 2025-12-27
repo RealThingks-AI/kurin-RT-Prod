@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Phone, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -224,29 +224,15 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Animated Tagline */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="h-[5.5rem] md:h-[7rem] lg:h-[8rem] mt-6 mb-8 md:mt-8 md:mb-10 overflow-hidden"
-          >
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={currentTagline}
-                initial={{ y: 60, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -60, opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="heading-xl text-white drop-shadow-lg"
-              >
-                {taglines[currentTagline]}{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light via-purple-300 to-blue-200">
-                  At Your Fingertips
-                </span>
-              </motion.h1>
-            </AnimatePresence>
-          </motion.div>
+          {/* Main Heading - Static for fast LCP */}
+          <div className="h-[5.5rem] md:h-[7rem] lg:h-[8rem] mt-6 mb-8 md:mt-8 md:mb-10 overflow-hidden animate-fade-in">
+            <h1 className="heading-xl text-white drop-shadow-lg">
+              {taglines[currentTagline]}{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light via-purple-300 to-blue-200">
+                At Your Fingertips
+              </span>
+            </h1>
+          </div>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
