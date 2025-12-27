@@ -3,20 +3,28 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   Megaphone,
-  Filter,
-  UserCheck,
+  Search,
+  UserPlus,
+  FileText,
   ShieldCheck,
-  ClipboardCheck,
+  Phone,
+  Filter,
+  Video,
+  Award,
   GraduationCap,
 } from "lucide-react";
 
 const steps = [
-  { icon: Megaphone, title: "Advertise", description: "Wide-reaching recruitment campaigns" },
-  { icon: Filter, title: "Screen", description: "Rigorous candidate filtering" },
-  { icon: UserCheck, title: "Interview", description: "In-depth skill assessment" },
+  { icon: Megaphone, title: "Advertise the Position", description: "Wide-reaching recruitment campaigns" },
+  { icon: Search, title: "Identify Hiring Needs", description: "Understanding client requirements" },
+  { icon: UserPlus, title: "Recruit the Position", description: "Sourcing qualified candidates" },
+  { icon: FileText, title: "Review Applications", description: "Thorough application screening" },
   { icon: ShieldCheck, title: "Background Check", description: "Comprehensive verification" },
-  { icon: ClipboardCheck, title: "Evaluation", description: "Performance validation" },
-  { icon: GraduationCap, title: "Induction", description: "Thorough onboarding process" },
+  { icon: Phone, title: "Phone Interview", description: "Initial screening calls" },
+  { icon: Filter, title: "Screening & Shortlisting", description: "Selecting top candidates" },
+  { icon: Video, title: "Interviews", description: "Virtual or offline interviews" },
+  { icon: Award, title: "Evaluation & Offer", description: "Final assessment and offer" },
+  { icon: GraduationCap, title: "Induction", description: "Onboarding new employees" },
 ];
 
 const Process = () => {
@@ -37,11 +45,13 @@ const Process = () => {
             Quality Assurance
           </span>
           <h2 className="heading-lg text-primary-foreground mb-6">
-            Our <span className="text-accent">Hiring Process</span>
+            Our <span className="text-accent">Recruiting & Selection Process</span>
           </h2>
-          <p className="text-xl text-primary-foreground/70">
-            A rigorous 6-step process ensuring you get only the best qualified
-            and verified professionals.
+          <p className="text-xl text-primary-foreground/70 mb-4">
+            Our recruitment principle mainly involves finding the right candidate with the best skills, experience, and personality to fit the job.
+          </p>
+          <p className="text-primary-foreground/60">
+            A rigorous 10-step process ensuring you get only the best qualified and verified professionals.
           </p>
         </motion.div>
 
@@ -59,7 +69,7 @@ const Process = () => {
             </div>
 
             {/* Steps */}
-            <div className="grid grid-cols-6 gap-4">
+            <div className="grid grid-cols-5 gap-4">
               {steps.map((step, index) => (
                 <motion.div
                   key={step.title}
