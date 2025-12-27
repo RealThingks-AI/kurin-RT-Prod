@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Users,
   Building2,
@@ -9,7 +9,16 @@ import {
   ShieldCheck,
   HardHat,
   Coffee,
+  MessageCircle,
+  CheckCircle2,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const services = [
   {
@@ -85,9 +94,12 @@ const services = [
   },
 ];
 
+type Service = typeof services[number];
+
 const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -113,77 +125,131 @@ const Services = () => {
     },
   };
 
+  const handleWhatsApp = (serviceName: string) => {
+    const message = encodeURIComponent(`Enquiry for ${serviceName}`);
+    window.open(`https://wa.me/917038613623?text=${message}`, "_blank");
+  };
+
   return (
-    <section id="services" className="py-16 md:py-20 bg-background" ref={ref}>
-      <div className="section-container">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12"
-        >
-          <span className="inline-block px-3 py-1.5 mb-3 text-xs font-medium rounded-full bg-accent/10 text-accent">
-            What We Do
-          </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
-            Comprehensive <span className="text-accent">Facility Solutions</span>
-          </h2>
-          <p className="text-muted-foreground text-sm">
-            From staffing to security, we provide end-to-end workforce and facility management services.
-          </p>
-        </motion.div>
+    <>
+      <section id="services" className="py-16 md:py-20 bg-background" ref={ref}>
+        <div className="section-container">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-2xl mx-auto mb-12"
+          >
+            <span className="inline-block px-3 py-1.5 mb-3 text-xs font-medium rounded-full bg-accent/10 text-accent">
+              What We Do
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
+              Comprehensive <span className="text-accent">Facility Solutions</span>
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              From staffing to security, we provide end-to-end workforce and facility management services.
+            </p>
+          </motion.div>
 
-        {/* Services Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
-        >
-          {services.map((service) => (
-            <motion.div
-              key={service.title}
-              variants={itemVariants}
-              className="group relative bg-card rounded-xl border border-border p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-            >
-              {/* Icon */}
-              <div className="p-2.5 rounded-lg bg-accent/10 w-fit mb-4 group-hover:bg-accent group-hover:shadow-glow transition-all duration-300">
-                <service.icon className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
+          {/* Services Grid */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          >
+            {services.map((service) => (
+              <motion.div
+                key={service.title}
+                variants={itemVariants}
+                onClick={() => setSelectedService(service)}
+                className="group relative bg-card rounded-xl border border-border p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+              >
+                {/* Icon */}
+                <div className="p-2.5 rounded-lg bg-accent/10 w-fit mb-4 group-hover:bg-accent group-hover:shadow-glow transition-all duration-300">
+                  <service.icon className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
+                </div>
+
+                {/* Content */}
+                <h3 className="font-semibold text-primary mb-2 text-base">
+                  {service.title}
+                </h3>
+                <p className="text-muted-foreground mb-3 leading-relaxed text-xs line-clamp-2">
+                  {service.description}
+                </p>
+
+                {/* Features - Show only 2 */}
+                <div className="flex flex-wrap gap-1.5">
+                  {service.features.slice(0, 2).map((feature) => (
+                    <span
+                      key={feature}
+                      className="inline-block px-2 py-0.5 text-[10px] rounded-full bg-accent/10 text-accent"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                  {service.features.length > 2 && (
+                    <span className="inline-block px-2 py-0.5 text-[10px] rounded-full bg-muted text-muted-foreground">
+                      +{service.features.length - 2} more
+                    </span>
+                  )}
+                </div>
+
+                {/* Hover Border Effect */}
+                <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-accent/30 transition-colors pointer-events-none" />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Service Detail Dialog */}
+      <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
+        <DialogContent className="sm:max-w-lg">
+          {selectedService && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-3 rounded-xl bg-accent/10">
+                    <selectedService.icon className="w-6 h-6 text-accent" />
+                  </div>
+                  <DialogTitle className="text-xl font-bold text-primary">
+                    {selectedService.title}
+                  </DialogTitle>
+                </div>
+              </DialogHeader>
+
+              <div className="space-y-4">
+                <p className="text-muted-foreground leading-relaxed">
+                  {selectedService.description}
+                </p>
+
+                <div>
+                  <h4 className="font-semibold text-primary mb-3 text-sm">What's Included:</h4>
+                  <ul className="space-y-2">
+                    {selectedService.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Button
+                  onClick={() => handleWhatsApp(selectedService.title)}
+                  className="w-full bg-green-500 hover:bg-green-600 text-white"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Enquire on WhatsApp
+                </Button>
               </div>
-
-              {/* Content */}
-              <h3 className="font-semibold text-primary mb-2 text-base">
-                {service.title}
-              </h3>
-              <p className="text-muted-foreground mb-3 leading-relaxed text-xs line-clamp-2">
-                {service.description}
-              </p>
-
-              {/* Features - Show only 2 */}
-              <div className="flex flex-wrap gap-1.5">
-                {service.features.slice(0, 2).map((feature) => (
-                  <span
-                    key={feature}
-                    className="inline-block px-2 py-0.5 text-[10px] rounded-full bg-accent/10 text-accent"
-                  >
-                    {feature}
-                  </span>
-                ))}
-                {service.features.length > 2 && (
-                  <span className="inline-block px-2 py-0.5 text-[10px] rounded-full bg-muted text-muted-foreground">
-                    +{service.features.length - 2} more
-                  </span>
-                )}
-              </div>
-
-              {/* Hover Border Effect */}
-              <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-accent/30 transition-colors pointer-events-none" />
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
