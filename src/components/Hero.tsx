@@ -159,8 +159,8 @@ const Hero = () => {
             Trusted by Industry Leaders
           </p>
           <div className="relative overflow-hidden">
-            <div className="flex animate-marquee">
-              {[...clients, ...clients].map((client, index) => (
+            <div className="flex animate-marquee whitespace-nowrap">
+              {[...clients, ...clients, ...clients, ...clients].map((client, index) => (
                 <div
                   key={index}
                   className="flex-shrink-0 px-6 py-3 mx-3 bg-white rounded-lg shadow-sm flex items-center justify-center min-w-[140px]"
@@ -168,7 +168,7 @@ const Hero = () => {
                   <img 
                     src={client.logo} 
                     alt={client.name} 
-                    className="h-10 w-auto max-w-[120px] object-contain hover:scale-105 transition-transform"
+                    className="h-10 w-auto max-w-[120px] object-contain"
                   />
                 </div>
               ))}
