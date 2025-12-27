@@ -663,6 +663,7 @@ const Contact = () => {
                       className={getInputStyles("service")}
                       onBlur={() => handleBlur("service")}
                       onFocus={() => setFocusedField("service")}
+                      aria-label="Select a service"
                     >
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
