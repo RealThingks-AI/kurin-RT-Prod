@@ -68,13 +68,22 @@ const Clients = () => {
         </motion.div>
 
         {/* Clients Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6"
+        >
           {clients.map((client, index) => (
             <motion.div
               key={client.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.3 + index * 0.04,
+                ease: "easeOut"
+              }}
               className="bg-white rounded-xl border border-border p-4 md:p-6 flex items-center justify-center shadow-sm"
             >
               <img
@@ -84,7 +93,7 @@ const Clients = () => {
               />
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Trust Badge */}
         <motion.div

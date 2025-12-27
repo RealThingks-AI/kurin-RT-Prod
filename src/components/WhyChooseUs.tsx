@@ -91,29 +91,27 @@ const WhyChooseUs = () => {
         </div>
 
         {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
-        >
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { value: "1000+", label: "Staff Deployed" },
             { value: "50+", label: "Happy Clients" },
             { value: "7+", label: "Years Experience" },
             { value: "24/7", label: "Support Available" },
           ].map((stat, index) => (
-            <div
+            <motion.div
               key={stat.label}
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.4 + index * 0.1, ease: "easeOut" }}
               className="text-center p-6 bg-accent/5 rounded-xl border border-accent/10"
             >
               <div className="text-3xl md:text-4xl font-bold font-display text-accent mb-2">
                 {stat.value}
               </div>
               <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

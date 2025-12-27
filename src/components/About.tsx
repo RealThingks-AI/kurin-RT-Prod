@@ -84,7 +84,12 @@ const About = () => {
 
             {/* Vision & Mission Cards */}
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="p-6 bg-background rounded-xl border border-border shadow-sm">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="p-6 bg-background rounded-xl border border-border shadow-sm"
+              >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 rounded-lg bg-accent/10">
                     <Eye className="w-5 h-5 text-accent" />
@@ -97,9 +102,14 @@ const About = () => {
                   To fulfill manpower needs by offering the right people for the
                   right jobs, creating career growth opportunities nationwide.
                 </p>
-              </div>
+              </motion.div>
 
-              <div className="p-6 bg-background rounded-xl border border-border shadow-sm">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="p-6 bg-background rounded-xl border border-border shadow-sm"
+              >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 rounded-lg bg-primary/10">
                     <Rocket className="w-5 h-5 text-primary" />
@@ -112,7 +122,7 @@ const About = () => {
                   To provide innovative workforce solutions, connecting human
                   potential to the power of business.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>

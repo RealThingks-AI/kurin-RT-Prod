@@ -56,13 +56,21 @@ const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Background Image */}
-      <div
+      <motion.div
+        initial={{ scale: 1.1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 gradient-overlay" />
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="absolute inset-0 gradient-overlay" 
+      />
 
       {/* Content */}
       <div className="relative z-10 section-container py-32">
@@ -140,7 +148,12 @@ const Hero = () => {
       </div>
 
       {/* Client Marquee */}
-      <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm py-6 border-t border-border/20">
+      <motion.div 
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+        className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm py-6 border-t border-border/20"
+      >
         <div className="section-container">
           <p className="text-center text-muted-foreground text-sm mb-4 font-medium tracking-wider uppercase">
             Trusted by Industry Leaders
@@ -162,7 +175,7 @@ const Hero = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
