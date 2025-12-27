@@ -6,6 +6,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import Services from "@/components/Services";
 import Process from "@/components/Process";
 import Industries from "@/components/Industries";
+import Clients from "@/components/Clients";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
@@ -34,6 +35,7 @@ const Index = () => {
         <Services />
         <Process />
         <Industries />
+        <Clients />
         <Contact />
         <Footer />
         <FloatingButtons />
