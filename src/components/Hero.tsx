@@ -91,22 +91,14 @@ const Hero = () => {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image with Parallax Effect */}
-      <motion.div
-        initial={{ scale: 1.15, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      {/* Background Image - Static for faster LCP */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-hero-bg-fade"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
 
-      {/* Gradient Overlay - Enhanced */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.2 }}
-        className="absolute inset-0 gradient-overlay" 
-      />
+      {/* Gradient Overlay - Static for faster LCP */}
+      <div className="absolute inset-0 gradient-overlay" />
 
       {/* Animated Gradient Mesh */}
       <div className="absolute inset-0 opacity-30">
