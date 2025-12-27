@@ -8,6 +8,8 @@ import {
   Wrench,
   ShieldCheck,
   MessageCircle,
+  HardHat,
+  Coffee,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -17,30 +19,49 @@ const services = [
     title: "Staff & Payroll Outsourcing",
     description:
       "We manage time-consuming financial and HR functions with speed and accuracy, enabling clients to focus on core business operations.",
+    features: ["Recruitment & Onboarding", "Payroll Management", "Compliance Handling", "HR Administration"],
+  },
+  {
+    icon: HardHat,
+    title: "Labour Supply",
+    description:
+      "Reliable and skilled labour workforce for construction, manufacturing, and industrial projects. Trained workers available on-demand for short and long-term requirements.",
+    features: ["Skilled Workers", "Semi-skilled Labour", "Helper Staff", "On-demand Availability"],
   },
   {
     icon: Building2,
     title: "Corporate Housekeeping",
     description:
       "Comprehensive cleaning for offices, malls, and multiplexes including dusting, vacuuming, cobweb removal, and upholstery care.",
+    features: ["Office Cleaning", "Mall Maintenance", "Multiplex Cleaning", "Deep Sanitization"],
   },
   {
     icon: Sparkles,
     title: "Washroom Hygiene Management",
     description:
       "Deep cleaning and sanitization of sinks, vanities, showers, and toilets at frequent intervals to maintain the highest hygiene standards.",
+    features: ["Periodic Sanitization", "Odour Control", "Consumable Refills", "Hygiene Audits"],
   },
   {
     icon: Wrench,
-    title: "Facility Management Services",
+    title: "MEP & Technical Services",
     description:
-      "Complete MEP support including mechanical, electrical, plumbing systems, air-conditioning maintenance, and road sweeping.",
+      "Complete MEP support including mechanical, electrical, and plumbing systems. Also covers painting, carpentry, civil work, pest control, and AC maintenance.",
+    features: ["Electrical & Plumbing", "AC Maintenance", "Painting & Carpentry", "Pest Control"],
   },
   {
     icon: ShieldCheck,
     title: "Professional Security Services",
     description:
-      "Trained and verified security personnel ensuring safety, asset protection, and controlled environments.",
+      "Trained and verified security personnel for all environments. Services include bouncers, personal security officers (PSO), residential, and commercial security.",
+    features: ["Corporate Security", "Residential Guards", "Bouncer Services", "Personal Security Officers"],
+  },
+  {
+    icon: Coffee,
+    title: "Pantry & Cafeteria Services",
+    description:
+      "Professional pantry boys and cafeteria staff to manage your office refreshments and food services. Trained personnel ensuring hygiene and prompt service.",
+    features: ["Pantry Management", "Tea/Coffee Service", "Cafeteria Staff", "Event Catering Support"],
   },
 ];
 
@@ -92,12 +113,24 @@ const Services = () => {
               </div>
 
               {/* Content */}
-              <h3 className="heading-md text-primary mb-4 text-xl">
+              <h3 className="heading-md text-primary mb-3 text-xl">
                 {service.title}
               </h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
+              <p className="text-muted-foreground mb-4 leading-relaxed text-sm">
                 {service.description}
               </p>
+
+              {/* Features */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {service.features.map((feature) => (
+                  <span
+                    key={feature}
+                    className="inline-block px-2 py-1 text-xs rounded-full bg-accent/10 text-accent"
+                  >
+                    {feature}
+                  </span>
+                ))}
+              </div>
 
               {/* CTA */}
               <Button

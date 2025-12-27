@@ -24,10 +24,12 @@ import { useToast } from "@/hooks/use-toast";
 
 const services = [
   "Staff & Payroll Outsourcing",
+  "Labour Supply",
   "Corporate Housekeeping",
   "Washroom Hygiene Management",
-  "Facility Management Services",
+  "MEP & Technical Services",
   "Professional Security Services",
+  "Pantry & Cafeteria Services",
   "Other",
 ];
 
