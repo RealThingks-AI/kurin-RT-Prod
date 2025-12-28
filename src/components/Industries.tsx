@@ -156,23 +156,23 @@ const Industries = () => {
               className="group relative overflow-hidden rounded-xl cursor-pointer"
               onClick={() => setSelectedIndustry(industry)}
             >
-              <div className="relative overflow-hidden h-24 md:h-36">
+              <div className="relative overflow-hidden h-28 md:h-40">
                 <img
                   src={industry.image}
                   alt={industry.name}
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300" />
+                {/* Overlay - stronger gradient for better text visibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/20 group-hover:from-black group-hover:via-black/70 transition-all duration-300" />
                 
                 {/* Text */}
-                <div className="absolute inset-0 flex items-end p-2 md:p-3">
+                <div className="absolute inset-0 flex items-end p-3 md:p-4">
                   <div className="w-full">
-                    <h3 className="font-display font-bold text-white text-[10px] md:text-sm leading-tight">
+                    <h3 className="font-display font-bold text-white text-xs md:text-sm leading-tight drop-shadow-lg">
                       {industry.name}
                     </h3>
-                    <div className="h-0.5 w-0 group-hover:w-6 md:group-hover:w-8 bg-accent transition-all duration-300 mt-0.5 md:mt-1" />
+                    <div className="h-0.5 w-0 group-hover:w-8 md:group-hover:w-10 bg-accent transition-all duration-300 mt-1 md:mt-1.5" />
                   </div>
                 </div>
               </div>
