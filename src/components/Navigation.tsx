@@ -210,36 +210,36 @@ const Navigation = () => {
             
             {/* Menu Panel */}
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-background shadow-2xl z-50 lg:hidden flex flex-col"
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
+              className="fixed top-0 right-0 bottom-0 w-[80%] max-w-xs bg-background shadow-2xl z-50 lg:hidden flex flex-col"
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-border">
-                <img src={logo} alt="Kurin Hygienic" className="h-10 w-auto" />
+              <div className="flex items-center justify-between p-4 border-b border-border">
+                <img src={logo} alt="Kurin Hygienic" className="h-9 w-auto" />
                 <motion.button
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Close menu"
                   className="p-2 rounded-xl hover:bg-accent/10 transition-colors"
                   whileTap={{ scale: 0.95 }}
                 >
-                  <X className="w-6 h-6 text-foreground" />
+                  <X className="w-5 h-5 text-foreground" />
                 </motion.button>
               </div>
 
               {/* Navigation Links */}
-              <nav className="flex-1 py-6 overflow-y-auto">
+              <nav className="flex-1 py-4 overflow-y-auto">
                 {navLinks.map((link, index) => (
                   <motion.a
                     key={link.href}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    initial={{ opacity: 0, x: 30 }}
+                    initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 + 0.1 }}
-                    className={`flex items-center gap-3 px-6 py-4 text-lg font-medium transition-all ${
+                    transition={{ delay: index * 0.03 + 0.1, duration: 0.2 }}
+                    className={`flex items-center gap-3 px-5 py-3.5 text-base font-medium transition-all ${
                       activeSection === link.href.substring(1)
                         ? "text-accent bg-accent/10 border-r-4 border-accent"
                         : "text-foreground hover:text-accent hover:bg-accent/5"
@@ -263,9 +263,9 @@ const Navigation = () => {
                 className="p-6 border-t border-border bg-muted/50"
               >
                 <a href="tel:7038613623" className="block">
-                  <Button variant="accent" size="xl" className="w-full gap-2 font-semibold">
+                  <Button variant="accent" size="lg" className="w-full gap-2 font-semibold">
                     <Phone className="w-5 h-5" />
-                    +91 7038 613 623
+                    Call Now
                   </Button>
                 </a>
                 <p className="text-center text-xs text-muted-foreground mt-3">
