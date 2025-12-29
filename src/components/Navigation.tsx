@@ -217,8 +217,7 @@ const Navigation = () => {
               className="fixed top-0 right-0 bottom-0 w-[80%] max-w-xs bg-background shadow-2xl z-50 lg:hidden flex flex-col"
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-border">
-                <img src={logo} alt="Kurin Hygienic" className="h-9 w-auto" />
+              <div className="flex items-center justify-end p-4 border-b border-border">
                 <motion.button
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Close menu"
