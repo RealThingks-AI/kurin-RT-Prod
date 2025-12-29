@@ -321,7 +321,7 @@ const Hero = () => {
                       src={client.logo}
                       alt={client.name}
                       loading="lazy"
-                      className="h-10 md:h-16 w-auto max-w-[80px] md:max-w-[140px] object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100"
+                      className="h-10 md:h-16 w-auto max-w-[80px] md:max-w-[140px] object-contain transition-all duration-300"
                     />
                   </div>
                 ))}
@@ -337,7 +337,7 @@ const Hero = () => {
                       src={client.logo}
                       alt={client.name}
                       loading="lazy"
-                      className="h-10 md:h-16 w-auto max-w-[80px] md:max-w-[140px] object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100"
+                      className="h-10 md:h-16 w-auto max-w-[80px] md:max-w-[140px] object-contain transition-all duration-300"
                     />
                   </div>
                 ))}
