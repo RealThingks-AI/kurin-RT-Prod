@@ -11,13 +11,45 @@ import {
   Award,
 } from "lucide-react";
 import aboutTeam from "@/assets/about-team.jpg";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const values = [
-  { icon: Users, label: "Collaboration", description: "Working together for success" },
-  { icon: Zap, label: "Empowerment", description: "Enabling growth at every level" },
-  { icon: Shield, label: "Integrity", description: "Honest and transparent dealings" },
-  { icon: Heart, label: "Respect", description: "Valuing every individual" },
-  { icon: Target, label: "Responsibility", description: "Accountable for our actions" },
+  { 
+    icon: Users, 
+    label: "Collaboration", 
+    description: "Working together for success",
+    details: "At Kurin Hygienic, collaboration is at the heart of everything we do. We believe that the best results come from working together—across teams, with our clients, and within the communities we serve. Our collaborative approach ensures that every project benefits from diverse perspectives and unified effort."
+  },
+  { 
+    icon: Zap, 
+    label: "Empowerment", 
+    description: "Enabling growth at every level",
+    details: "We empower our employees and partners to take initiative, make decisions, and grow professionally. Through continuous training, mentorship programs, and career development opportunities, we ensure that everyone in our network has the tools they need to succeed and advance."
+  },
+  { 
+    icon: Shield, 
+    label: "Integrity", 
+    description: "Honest and transparent dealings",
+    details: "Integrity is non-negotiable at Kurin Hygienic. We maintain complete transparency in all our business dealings, from contracts to communications. Our clients trust us because we always do what we say, and we say what we mean—no hidden agendas, no surprises."
+  },
+  { 
+    icon: Heart, 
+    label: "Respect", 
+    description: "Valuing every individual",
+    details: "Every person matters. We treat all employees, clients, and partners with dignity and respect, regardless of their role or background. This inclusive approach creates a positive work environment where everyone feels valued and motivated to contribute their best."
+  },
+  { 
+    icon: Target, 
+    label: "Responsibility", 
+    description: "Accountable for our actions",
+    details: "We take full responsibility for our work and its outcomes. When we make commitments, we honor them. When challenges arise, we address them head-on. Our accountability extends to environmental and social responsibility, ensuring sustainable practices in all operations."
+  },
 ];
 
 // Animated counter component
@@ -49,13 +81,19 @@ const AnimatedCounter = ({ value, suffix = "", duration = 2 }: { value: number; 
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [selectedValue, setSelectedValue] = useState<typeof values[0] | null>(null);
+  const [selectedCard, setSelectedCard] = useState<{ type: 'vision' | 'mission' | 'stat'; data?: any } | null>(null);
 
   const stats = [
-    { value: 7, suffix: "+", label: "Years Experience" },
-    { value: 500, suffix: "+", label: "Staff Deployed" },
-    { value: 50, suffix: "+", label: "Happy Clients" },
-    { value: 14, suffix: "+", label: "Industries Served" },
+    { value: 7, suffix: "+", label: "Years Experience", details: "Since 2018, we have been providing exceptional workforce solutions. Our 7+ years of experience have helped us understand the nuances of different industries and deliver tailored staffing solutions that meet specific business needs." },
+    { value: 500, suffix: "+", label: "Staff Deployed", details: "We have successfully deployed over 500 skilled professionals across various industries. Our rigorous selection process ensures that each staff member is qualified, trained, and ready to contribute from day one." },
+    { value: 50, suffix: "+", label: "Happy Clients", details: "Our client satisfaction rate speaks for itself. Over 50 businesses across multiple sectors trust Kurin Hygienic for their staffing needs, with many becoming long-term partners who rely on us year after year." },
+    { value: 14, suffix: "+", label: "Industries Served", details: "From construction to hospitality, healthcare to retail, we have expertise in 14+ different industries. This diverse experience allows us to understand unique industry requirements and provide specialized workforce solutions." },
   ];
+
+  const visionDetails = "Our vision extends beyond just filling positions. We aim to create a workforce ecosystem where the right talent meets the right opportunity. By 2030, we aspire to be the leading workforce solutions provider in India, known for transforming careers and businesses alike. We envision a future where every individual has access to meaningful employment and every business has access to quality talent.";
+  
+  const missionDetails = "Our mission drives every decision we make. We are committed to understanding each client's unique needs and providing customized workforce solutions. Through continuous innovation, technology adoption, and focus on quality, we connect human potential to business success. We measure our success not just by placements made, but by careers built and businesses transformed.";
 
   return (
     <section id="about" className="py-20 md:py-28 bg-gradient-subtle" ref={ref}>
@@ -158,7 +196,8 @@ const About = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.4 }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="group p-6 bg-card rounded-2xl border border-border shadow-sm hover:shadow-lg hover:border-accent/30 transition-all duration-300"
+                onClick={() => setSelectedCard({ type: 'vision' })}
+                className="group p-6 bg-card rounded-2xl border border-border shadow-sm hover:shadow-lg hover:border-accent/30 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2.5 rounded-xl bg-gradient-to-br from-accent/10 to-purple-light/10 group-hover:from-accent/20 group-hover:to-purple-light/20 transition-colors">
@@ -172,6 +211,7 @@ const About = () => {
                   To fulfill manpower needs by offering the right people for the
                   right jobs, creating career growth opportunities nationwide.
                 </p>
+                <p className="text-xs text-accent mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Click to learn more →</p>
               </motion.div>
 
               <motion.div 
@@ -179,7 +219,8 @@ const About = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.5 }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="group p-6 bg-card rounded-2xl border border-border shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+                onClick={() => setSelectedCard({ type: 'mission' })}
+                className="group p-6 bg-card rounded-2xl border border-border shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2.5 rounded-xl bg-gradient-to-br from-primary/10 to-navy-light/10 group-hover:from-primary/20 group-hover:to-navy-light/20 transition-colors">
@@ -193,10 +234,30 @@ const About = () => {
                   To provide innovative workforce solutions, connecting human
                   potential to the power of business.
                 </p>
+                <p className="text-xs text-accent mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Click to learn more →</p>
               </motion.div>
             </div>
           </motion.div>
         </div>
+
+        {/* Vision/Mission Dialog */}
+        <Dialog open={selectedCard !== null && selectedCard.type !== 'stat'} onOpenChange={() => setSelectedCard(null)}>
+          <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <div className={`p-3 rounded-xl ${selectedCard?.type === 'vision' ? 'bg-accent/10' : 'bg-primary/10'}`}>
+                  {selectedCard?.type === 'vision' ? <Eye className="w-6 h-6 text-accent" /> : <Rocket className="w-6 h-6 text-primary" />}
+                </div>
+                <DialogTitle className="text-xl font-display">
+                  {selectedCard?.type === 'vision' ? 'Our Vision' : 'Our Mission'}
+                </DialogTitle>
+              </div>
+              <DialogDescription className="text-base leading-relaxed pt-2">
+                {selectedCard?.type === 'vision' ? visionDetails : missionDetails}
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
 
         {/* Stats Section */}
         <motion.div
@@ -212,16 +273,38 @@ const About = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
               className="relative group"
+              onClick={() => setSelectedCard({ type: 'stat', data: stat })}
             >
-              <div className="text-center p-4 md:p-6 rounded-xl md:rounded-2xl bg-card border border-border hover:border-accent/30 hover:shadow-lg transition-all duration-300">
+              <div className="text-center p-4 md:p-6 rounded-xl md:rounded-2xl bg-card border border-border hover:border-accent/30 hover:shadow-lg transition-all duration-300 cursor-pointer">
                 <div className="text-3xl md:text-5xl font-bold font-display text-transparent bg-clip-text bg-gradient-to-br from-accent to-purple-dark mb-1 md:mb-2">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </div>
                 <div className="text-xs md:text-sm text-muted-foreground font-medium">{stat.label}</div>
+                <p className="text-[10px] text-accent mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Click for details</p>
               </div>
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Stats Dialog */}
+        <Dialog open={selectedCard?.type === 'stat'} onOpenChange={() => setSelectedCard(null)}>
+          <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="text-4xl font-bold font-display text-transparent bg-clip-text bg-gradient-to-br from-accent to-purple-dark">
+                  {selectedCard?.data?.value}{selectedCard?.data?.suffix}
+                </div>
+              </div>
+              <DialogTitle className="text-xl font-display">
+                {selectedCard?.data?.label}
+              </DialogTitle>
+              <DialogDescription className="text-base leading-relaxed pt-2">
+                {selectedCard?.data?.details}
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+
 
         {/* Core Values */}
         <motion.div
@@ -241,7 +324,8 @@ const About = () => {
                 animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 whileHover={{ y: -6, scale: 1.02 }}
-                className="group p-4 md:p-6 bg-card rounded-xl md:rounded-2xl border border-border shadow-sm hover:shadow-xl hover:border-accent/30 transition-all duration-300 cursor-default"
+                onClick={() => setSelectedValue(value)}
+                className="group p-4 md:p-6 bg-card rounded-xl md:rounded-2xl border border-border shadow-sm hover:shadow-xl hover:border-accent/30 transition-all duration-300 cursor-pointer"
               >
                 <div className="relative mx-auto mb-3 md:mb-4">
                   <div className="p-3 md:p-4 rounded-xl md:rounded-2xl bg-gradient-to-br from-accent/10 to-purple-light/10 w-fit mx-auto group-hover:from-accent/20 group-hover:to-purple-light/20 transition-all duration-300">
@@ -259,6 +343,25 @@ const About = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Values Dialog */}
+          <Dialog open={selectedValue !== null} onOpenChange={() => setSelectedValue(null)}>
+            <DialogContent className="sm:max-w-lg">
+              <DialogHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-3 rounded-xl bg-accent/10">
+                    {selectedValue && <selectedValue.icon className="w-6 h-6 text-accent" />}
+                  </div>
+                  <DialogTitle className="text-xl font-display">
+                    {selectedValue?.label}
+                  </DialogTitle>
+                </div>
+                <DialogDescription className="text-base leading-relaxed pt-2">
+                  {selectedValue?.details}
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </motion.div>
       </div>
     </section>
