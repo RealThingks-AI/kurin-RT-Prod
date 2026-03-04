@@ -1,13 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { useState } from "react";
+import { CONTACT } from "@/data/contact";
 
 const FloatingButtons = () => {
   const [showTooltip, setShowTooltip] = useState<string | null>(null);
 
   return (
     <>
-      {/* WhatsApp FAB - Bottom Right */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -28,7 +28,7 @@ const FloatingButtons = () => {
             )}
           </AnimatePresence>
           <a
-            href="https://wa.me/917038613623"
+            href={`https://wa.me/${CONTACT.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat with us on WhatsApp"
@@ -38,7 +38,6 @@ const FloatingButtons = () => {
           >
             <MessageCircle className="w-6 h-6 md:w-7 md:h-7 text-primary-foreground" />
           </a>
-          {/* Pulse Animation */}
           <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-25 pointer-events-none" />
         </div>
       </motion.div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -53,14 +53,12 @@ const Testimonials = () => {
     setIsAutoPlaying(false);
   };
 
-  // Auto-rotate every 5 seconds
   useEffect(() => {
     if (!isAutoPlaying) return;
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [isAutoPlaying, nextSlide]);
 
-  // Resume auto-play after user interaction
   useEffect(() => {
     if (isAutoPlaying) return;
     const timeout = setTimeout(() => setIsAutoPlaying(true), 10000);
@@ -80,13 +78,12 @@ const Testimonials = () => {
   return (
     <section 
       id="testimonials" 
-      className="py-12 md:py-16 bg-primary/5"
+      className="section-padding bg-primary/5"
       onKeyDown={handleKeyDown}
-      tabIndex={0}
       role="region"
       aria-label="Client testimonials"
     >
-      <div className="container mx-auto px-4">
+      <div className="section-container">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -98,45 +95,18 @@ const Testimonials = () => {
           <span className="inline-block px-4 py-2 mb-4 text-sm font-medium rounded-full bg-accent/10 text-accent">
             Testimonials
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="heading-lg text-foreground mb-4">
             What Our Clients Say
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-body max-w-2xl mx-auto">
             Hear from our satisfied clients
           </p>
         </motion.div>
 
         {/* Carousel */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Navigation Buttons */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => {
-              prevSlide();
-              setIsAutoPlaying(false);
-            }}
-            className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground focus:ring-2 focus:ring-accent focus:outline-none"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => {
-              nextSlide();
-              setIsAutoPlaying(false);
-            }}
-            className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground focus:ring-2 focus:ring-accent focus:outline-none"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </Button>
-
           {/* Testimonial Card */}
-          <div className="overflow-hidden px-8 md:px-0">
+          <div className="overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -183,22 +153,51 @@ const Testimonials = () => {
             </AnimatePresence>
           </div>
 
-          {/* Dot Indicators */}
-          <div className="flex justify-center gap-2 mt-8" role="tablist">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                role="tab"
-                aria-selected={currentIndex === index}
-                aria-label={`Go to testimonial ${index + 1}`}
-                className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${
-                  currentIndex === index
-                    ? "bg-accent w-8"
-                    : "bg-accent/30 hover:bg-accent/50"
-                }`}
-              />
-            ))}
+          {/* Navigation - Below card on mobile, beside on desktop */}
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => {
+                prevSlide();
+                setIsAutoPlaying(false);
+              }}
+              className="bg-background/80 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </Button>
+
+            {/* Dot Indicators */}
+            <div className="flex gap-2" role="tablist">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  role="tab"
+                  aria-selected={currentIndex === index}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${
+                    currentIndex === index
+                      ? "bg-accent w-8"
+                      : "bg-accent/30 hover:bg-accent/50"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => {
+                nextSlide();
+                setIsAutoPlaying(false);
+              }}
+              className="bg-background/80 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground focus:ring-2 focus:ring-accent focus:outline-none"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </Button>
           </div>
         </div>
       </div>
