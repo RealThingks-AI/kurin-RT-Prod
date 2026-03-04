@@ -2,32 +2,17 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import {
-  MapPin,
-  Phone,
-  Mail,
-  Send,
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
-  Check,
-  X,
-  Loader2,
-  MessageCircle,
-  Clock,
-  Sparkles,
+  MapPin, Phone, Mail, Send, Facebook, Instagram, Twitter, Youtube,
+  Check, X, Loader2, MessageCircle, Clock, Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { CONTACT } from "@/data/contact";
 
 const services = [
   "Staff & Payroll Outsourcing",
@@ -42,26 +27,10 @@ const services = [
 ];
 
 const socialLinks = [
-  {
-    name: "Facebook",
-    icon: Facebook,
-    url: "https://www.facebook.com/kurin2018",
-  },
-  {
-    name: "Instagram",
-    icon: Instagram,
-    url: "https://www.instagram.com/_kurin.hygienic",
-  },
-  {
-    name: "Twitter",
-    icon: Twitter,
-    url: "https://www.twitter.com/@KurinHygienic",
-  },
-  {
-    name: "YouTube",
-    icon: Youtube,
-    url: "https://www.youtube.com/@kurinpune8354",
-  },
+  { name: "Facebook", icon: Facebook, url: CONTACT.social.facebook },
+  { name: "Instagram", icon: Instagram, url: CONTACT.social.instagram },
+  { name: "Twitter", icon: Twitter, url: CONTACT.social.twitter },
+  { name: "YouTube", icon: Youtube, url: CONTACT.social.youtube },
 ];
 
 interface FormErrors {
@@ -83,6 +52,7 @@ const Contact = () => {
     service: "",
     message: "",
   });
+  const [honeypot, setHoneypot] = useState("");
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -220,15 +190,23 @@ const Contact = () => {
       return;
     }
 
+    // Honeypot check - if filled, silently "succeed"
+    if (honeypot) {
+      toast({ title: "Enquiry sent!", description: "We'll get back to you soon." });
+      return;
+    }
+
     setIsSubmitting(true);
 
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const subject = encodeURIComponent(`Enquiry for ${formData.service}`);
+    // Sanitize all values before constructing mailto
+    const sanitize = (str: string) => str.replace(/[\r\n]+/g, ' ').trim();
+    const subject = encodeURIComponent(`Enquiry for ${sanitize(formData.service)}`);
     const body = encodeURIComponent(
-      `Name: ${formData.name.trim()}\nEmail: ${formData.email.trim()}\nMobile: ${formData.mobile}\nService Required: ${formData.service}\n\nMessage:\n${formData.message.trim()}`
+      `Name: ${sanitize(formData.name)}\nEmail: ${sanitize(formData.email)}\nMobile: ${formData.mobile}\nService Required: ${sanitize(formData.service)}\n\nMessage:\n${sanitize(formData.message)}`
     );
-    window.location.href = `mailto:kurin.pune@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${CONTACT.email}?subject=${subject}&body=${body}`;
 
     setIsSubmitting(false);
 
@@ -366,24 +344,11 @@ const Contact = () => {
                     Phone
                   </h4>
                   <div className="space-y-1">
-                    <a
-                      href="tel:7038613623"
-                      className="block text-muted-foreground text-sm hover:text-accent transition-colors"
-                    >
-                      +91 7038 613 623
-                    </a>
-                    <a
-                      href="tel:8007770506"
-                      className="block text-muted-foreground text-sm hover:text-accent transition-colors"
-                    >
-                      +91 800 777 05 06
-                    </a>
-                    <a
-                      href="tel:8007770906"
-                      className="block text-muted-foreground text-sm hover:text-accent transition-colors"
-                    >
-                      +91 800 777 09 06
-                    </a>
+                    {CONTACT.phones.map((phone) => (
+                      <a key={phone.number} href={`tel:${phone.number}`} className="block text-muted-foreground text-sm hover:text-accent transition-colors">
+                        {phone.display}
+                      </a>
+                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -404,10 +369,10 @@ const Contact = () => {
                     Email
                   </h4>
                   <a
-                    href="mailto:kurin.pune@gmail.com"
+                    href={`mailto:${CONTACT.email}`}
                     className="text-muted-foreground text-sm hover:text-accent transition-colors"
                   >
-                    kurin.pune@gmail.com
+                    {CONTACT.email}
                   </a>
                 </div>
               </motion.div>
@@ -534,6 +499,20 @@ const Contact = () => {
               </div>
 
               <div className="space-y-5">
+                {/* Honeypot - hidden from users, catches bots */}
+                <div className="absolute -left-[9999px]" aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
+
                 {/* Name Field */}
                 <div>
                   <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">

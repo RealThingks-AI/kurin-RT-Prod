@@ -167,15 +167,9 @@
     }
   }
 
-  /* Lazy loading images */
+  /* Lazy loading images - opacity handled naturally by browser */
   img[loading="lazy"] {
-    opacity: 0;
     transition: opacity 0.4s ease-out;
-  }
-
-  img[loading="lazy"].loaded,
-  img[loading="lazy"]:not([src=""]) {
-    opacity: 1;
   }
 
   /* Selection styling */
